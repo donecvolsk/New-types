@@ -15,28 +15,19 @@ export default class Cart {
 
     //вывод суммы добавленых товаров
     amount() { 
-        let result: number = 0;
-        for (let i = 0; i < this._items.length; i++) {
-            result += this._items[i].price;
-      }
-      return result;   
+        const totalAmount: number = this._items.reduce((sum, currentAccount) => {
+            return sum + currentAccount.price;
+        }, 0)
+        return totalAmount;
     }
 
     //вывод суммы добавленых товаров со скидкой
     amountDiscounted(discounted: number) { 
-        let result: number = 0;
-        for (let i = 0; i < this._items.length; i++) {
-            result += this._items[i].price;
-      }
-      result = result - discounted;
-      return result;   
+        return this.amount() - discounted;
     }
 
+    //удаление товара из корзины
     deletingItem(id: number): void  {
-        for (let i = 0; i < this._items.length; i++) {
-            if (id === this._items[i].id) {
-                this._items.splice(i, 1);
-            }
-        }
+        this._items = this._items.filter((n) => n.id != id);
     }
 }
